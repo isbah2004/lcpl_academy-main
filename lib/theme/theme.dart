@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color greenColor = Color(0xFF8bc33c);
   static const Color redColor = Color(0xFFec1923);
   static const Color whiteColor = Color(0xFFF8F8FF);
-  static const Color blueColor = Color(0xFF044972);
+  static const Color blueColor = Color(0xFF3072FF);
   static const Color hintColor = Colors.grey;
   static final Color greyColor = Colors.grey[300]!;
   static final Color lightBlue = Colors.blue[100]!;
   static final Color darkGrey = Colors.grey[700]!;
 
-  static const TextStyle labelLarge =
-      TextStyle(color: blueColor, fontSize: 16.0, fontWeight: FontWeight.bold);
-  static const TextStyle displayLarge =
-      TextStyle(color: blueColor, fontSize: 32.0, fontWeight: FontWeight.bold);
-  static final TextStyle bodyLarge = TextStyle(color: darkGrey, fontSize: 18.0);
+  static final TextStyle labelLarge = GoogleFonts.kanit(
+      color: greyColor, fontSize: 16.0, fontWeight: FontWeight.bold);
+
+  static final TextStyle displayLarge = GoogleFonts.kanit(
+      color: greyColor, fontSize: 32.0, fontWeight: FontWeight.bold);
+  static final TextStyle bodyLarge =
+      GoogleFonts.kanit(color: greyColor, fontSize: 18.0);
 
   static final MaterialColor primarySwatch = createMaterialColor(blueColor);
   static final ThemeData lightTheme = ThemeData(
@@ -56,7 +59,6 @@ class AppTheme {
         textStyle: const TextStyle(fontSize: 16.0),
       ),
     ),
-   
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: blueColor,
       foregroundColor: whiteColor,

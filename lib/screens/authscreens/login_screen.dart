@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lcpl_academy/reusablewidgets/neomorphism_widget.dart';
+import 'package:lcpl_academy/provider/loading_provider.dart';
+import 'package:lcpl_academy/provider/password_visibility_provider.dart';
 import 'package:lcpl_academy/reusablewidgets/reusable_button.dart';
 import 'package:lcpl_academy/reusablewidgets/reusable_text_field.dart';
 import 'package:lcpl_academy/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -53,17 +55,43 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 25,
               ),
-              ReusableTextField(
-                focusNode: passwordFocusNode,
-                hintText: 'Password',
-                controller: passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                prefix: const Icon(Icons.lock_open_rounded),
-                validator: Utils.passwordValidator,
+              Consumer<PasswordVisibilityProvider>(
+                builder: (BuildContext context,
+                    PasswordVisibilityProvider value, Widget? child) {
+                  return ReusableTextField(
+                    focusNode: passwordFocusNode,
+                    hintText: 'Password',
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: value.visibility,
+                    prefix: const Icon(Icons.lock),
+                    validator: Utils.passwordValidator,
+                    suffix: GestureDetector(
+                      onTap: () {
+                        value.setVisibility();
+                      },
+                      child: Icon(value.visibility
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined),
+                    ),
+                  );
+                },
               ),
-              const SizedBox(height: 30),
-              const ReusableButton(),
+              const SizedBox(height: 20),
+              Consumer<AuthProvider>(
+                builder:
+                    (BuildContext context, AuthProvider value, Widget? child) {
+                  return ReusableButton(
+                      title: 'Login',
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          value.signInWithEmail(
+                              emailController.text, passwordController.text);
+                        }
+                      },
+                      loading: value.loading);
+                },
+              )
             ],
           ),
         ),
